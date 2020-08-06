@@ -39,9 +39,7 @@ func (s *Server) acceptSerialRequests(port serial.Port, deviceId uint8) {
 			frame, err := NewRTUFrame(packet)
 			if err != nil {
 				log.Printf("bad serial frame error %v\n", err)
-				return
-			}
-			if frame.GetAddress() == deviceId {
+			} else if frame.GetAddress() == deviceId {
 				request := &Request{port, frame}
 				s.requestChan <- request
 			} else {
